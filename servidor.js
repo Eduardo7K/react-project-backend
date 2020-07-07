@@ -9,14 +9,15 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/api/users/login", async (req, res, next) => {
-  console.log("chegou no backend");
+
+  const username = req.body.values.username;
+  const password = req.body.values.password;
   
   const user = await index.login({
-    username: req.body.values.username,
-    password: req.body.values.password,
+    username, password
   });
-  if (user) {
-    res.json({ user });
+  if (user.rowCount == 1) {
+    res.json(true);
   } else {
     res.json(null);
   }
